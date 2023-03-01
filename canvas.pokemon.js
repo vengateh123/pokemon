@@ -7,6 +7,9 @@ window.onload = function() {
     "use strict";
 
     var canvas = document.getElementById("canvas");
+    // var timer=document.createElement("p");
+    // timer.innerHTML="00:10"
+    // canvas.appendChild(timer);
     var ctx = canvas.getContext("2d");
     var w = document.getElementById("canvas").offsetWidth;
     var h = document.getElementById("canvas").offsetHeight;
@@ -221,6 +224,54 @@ window.onload = function() {
         update();
     };
 
+   //    timer code:
+   const startTime=11;
+   let time=startTime - 1;
+   const countdownEle=document.querySelector("p")
+
+   let interval = setInterval(newTimer,1000);
+
+  function newTimer(){
+     let minutes=Math.floor(time / 60);
+  //    console.log(minutes)
+     let seconds=time % 60;
+  
+     minutes = minutes < 10 ? '0' + minutes : minutes;
+
+     seconds = seconds < 10 ? '0' + seconds : seconds;
+
+     countdownEle.innerHTML=`${minutes}:${seconds}`;
+     time --;
+
+     if(time == -1){
+     clearInterval(interval);
+     }
+  }
+
+//     // var sec=setInterval(time,20000);
+
+//     function time(){
+//         var a=confirm("Your time is out,you lose one life and continue the game");
+//         if(a){
+//             alert("you leave one life")
+//         }
+//         else{
+//             alert("You start a new game")
+//         }
+//   }
+
+  //  var count=10;
+    // var obj=setInterval(time,1000);
+
+    //   function time(){
+    //     // obj.setInterval(time,1000);
+    //     console.log(count)
+    //     count--;
+    //     if(count==0){
+    //         clearInterval(obj);
+    //         return obj
+    //     }
+    
     /**
      * Handle all the updates of the canvas and creates the objects
      * @function
