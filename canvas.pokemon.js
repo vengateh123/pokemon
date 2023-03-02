@@ -3,13 +3,13 @@
  * @version 1.0.0
  * @author Panagiotis Vourtsis <vourtsis_pan@hotmail.com>
  */
+
+    // let timer;
+
 window.onload = function() {
     "use strict";
 
     var canvas = document.getElementById("canvas");
-    // var timer=document.createElement("p");
-    // timer.innerHTML="00:10"
-    // canvas.appendChild(timer);
     var ctx = canvas.getContext("2d");
     var w = document.getElementById("canvas").offsetWidth;
     var h = document.getElementById("canvas").offsetHeight;
@@ -74,6 +74,8 @@ window.onload = function() {
         spritePosition: 0,
         spriteItemDistance: 33
     };
+   
+
     pokeball.generatePosition = function() {
         do {
             pokeball.x = Math.floor(Math.random() * 20) + 1;
@@ -197,7 +199,6 @@ window.onload = function() {
                 } else {
                     player.currentDirection = "down-1";
                 }
-
                 break;
         }
 
@@ -212,6 +213,8 @@ window.onload = function() {
         /**
          * If player finds the coordinates of pokeball the generate new one, play the sound and update the score
          */
+
+         
         if(player.x == pokeball.x && player.y == pokeball.y) { // found a pokeball !! create a new one
             console.log("found a pokeball of "+pokeball.spritePosition+"! Bravo! ");
             pokePick.pause();
@@ -219,59 +222,90 @@ window.onload = function() {
             pokePick.play();
             score += 1;
             pokeball.generatePosition();
-        }
+            // pokeball.interval();
+            
+           var intervals=setInterval(newTimer,1000);
 
+             if(time == 7){
+            clearInterval(interval);
+            clearInterval(intervals);
+            // player.move();
+       }
+       if(time == 6){
+         clearInterval(interval);
+         clearInterval(intervals);
+         console.log(ele)
+        //  player.move();
+        }
+        if(time == 5){
+         clearInterval(interval);
+         clearInterval(intervals);
+        //  player.move();/
+        console.log(ele)
+        newTimer();
+        }
+        if(time == 4){
+         clearInterval(interval);
+         clearInterval(intervals);
+        }
+        if(time == 3){
+         clearInterval(interval);
+         clearInterval(intervals);
+        //  player.move();
+        }
+        if(time == 2){
+         clearInterval(interval);
+         clearInterval(intervals);
+        //  player.move();
+        }
+        if(time == 1){
+          clearInterval(interval);
+         clearInterval(intervals);
+        //   player.move();
+        }
+        if(time == -1){
+            clearInterval(interval);
+            clearInterval(intervals);
+          }
+       
+    }
         update();
     };
 
-   //    timer code:
-   const startTime=11;
-   let time=startTime - 1;
-   const countdownEle=document.querySelector("p")
+    const startTime=11;
+    let time=startTime - 1;
+    const ele=document.querySelector("P");
+    const countdownEle=document.getElementById("id1");
+   
+    var interval = setInterval(newTimer,1000);
+   
+   function newTimer(){
+      let minutes=Math.floor(time / 60);
+   //    console.log(minutes)
+      let seconds=time % 60;
+   
+      minutes = minutes < 10 ? '0' + minutes : minutes;
 
-   let interval = setInterval(newTimer,1000);
+      seconds = seconds < 10 ? '0' + seconds : seconds;
 
-  function newTimer(){
-     let minutes=Math.floor(time / 60);
-  //    console.log(minutes)
-     let seconds=time % 60;
-  
-     minutes = minutes < 10 ? '0' + minutes : minutes;
-
-     seconds = seconds < 10 ? '0' + seconds : seconds;
-
-     countdownEle.innerHTML=`${minutes}:${seconds}`;
-     time --;
-
-     if(time == -1){
-     clearInterval(interval);
-     }
-  }
-
-//     // var sec=setInterval(time,20000);
-
-//     function time(){
-//         var a=confirm("Your time is out,you lose one life and continue the game");
-//         if(a){
-//             alert("you leave one life")
-//         }
-//         else{
-//             alert("You start a new game")
-//         }
-//   }
-
-  //  var count=10;
-    // var obj=setInterval(time,1000);
-
-    //   function time(){
-    //     // obj.setInterval(time,1000);
-    //     console.log(count)
-    //     count--;
-    //     if(count==0){
-    //         clearInterval(obj);
-    //         return obj
-    //     }
+      countdownEle.innerHTML=`${minutes}:${seconds}`;
+      console.log(countdownEle)
+      time --;
     
+    function one(){
+      if(time === -1){
+        clearInterval(interval);
+
+        alert("your time is out");
+        console.log(countdownEle)
+        console.log(ele);
+
+    // var interval = setInterval(newTimer,1000);
+      }
+    }
+    one();
+    }
+   
     /**
      * Handle all the updates of the canvas and creates the objects
      * @function
@@ -292,7 +326,6 @@ window.onload = function() {
         console.log("x",(player.x * objectSizes)/objectSizes);
         ctx.drawImage(playerImage, player.direction[player.currentDirection].x, player.direction[player.currentDirection].y, objectSizes-2, objectSizes, player.x * objectSizes, player.y * objectSizes, objectSizes, objectSizes);
     }
-
     /**
      * Our function that decides if there is a collision on the objects or not
      * @function
@@ -302,12 +335,10 @@ window.onload = function() {
      */
     function check_collision(x, y) {
         var foundCollision = false;
-
         if(((x > 3 && x < 9) && y == 6) || ((x > 4 && x < 9) && (y == 5 || y == 4 || y == 3))) { //collision on house
             console.log("on house");
             foundCollision = true;
         }
-
         if((x<1 || x>20) ||
             (y<2 || y>20) ||
             ((y > 0 && y < 4) && (x == 20 || x == 19)) || //right corner
@@ -319,10 +350,8 @@ window.onload = function() {
             console.log("lost on the woods");
             foundCollision = true
         }
-
         return foundCollision;
     }
-
     /**
      * Here we are creating our board on the bottom right with our score
      * @todo maybe some mute button for the future?
@@ -340,8 +369,9 @@ window.onload = function() {
         ctx.font = "14px Arial";
         ctx.fillStyle = "rgba(255, 255, 255, 1)";
         ctx.fillText(score + " poketballs",w-85, h-25);
-    }
+        // ctx.fillText(score,w-93, h-25);
 
+    }
     /**
      * Decide here if all the assets are ready to start updating
      * @function
