@@ -10,7 +10,13 @@ window.onload = function() {
     "use strict";
 
     var canvas = document.getElementById("canvas");
+    // var a=document.createElement("p");
+    // a.setAttribute("id","id2");
+    // a.innerHTML="00:10";
+    // console.log(a);
+    // canvas.appendChild(a);
     var ctx = canvas.getContext("2d");
+    
     var w = document.getElementById("canvas").offsetWidth;
     var h = document.getElementById("canvas").offsetHeight;
     var terrainImageLoaded = false, houseImageLoaded = false, pokeballImageLoaded = false, playerImageLoaded = false;
@@ -39,7 +45,7 @@ window.onload = function() {
     var mainTheme = new Audio("sounds/main-theme.mp3");
     mainTheme.loop = true;
     mainTheme.volume = 0.5;
-    mainTheme.play();
+    // mainTheme.play();
 
     //pokeball-selection
     var pokePick = new Audio("sounds/pickup.mp3");
@@ -72,8 +78,9 @@ window.onload = function() {
         x: 0,
         y: 0,
         spritePosition: 0,
-        spriteItemDistance: 33
+        spriteItemDistance: 33,
     };
+    
    
 
     pokeball.generatePosition = function() {
@@ -214,7 +221,8 @@ window.onload = function() {
          * If player finds the coordinates of pokeball the generate new one, play the sound and update the score
          */
 
-         
+        //  function three(){
+            
         if(player.x == pokeball.x && player.y == pokeball.y) { // found a pokeball !! create a new one
             console.log("found a pokeball of "+pokeball.spritePosition+"! Bravo! ");
             pokePick.pause();
@@ -222,89 +230,114 @@ window.onload = function() {
             pokePick.play();
             score += 1;
             pokeball.generatePosition();
-            // pokeball.interval();
             
-           var intervals=setInterval(newTimer,1000);
-
-             if(time == 7){
-            clearInterval(interval);
-            clearInterval(intervals);
-            // player.move();
-       }
-       if(time == 6){
-         clearInterval(interval);
-         clearInterval(intervals);
-         console.log(ele)
-        //  player.move();
+         
+           //remove clearInterval and add firstTimer
+        if(time == 9){
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
+        }
+        if(time == 8){
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
+        }
+        if(time == 7){
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
+        }
+        if(time == 6){
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == 5){
-         clearInterval(interval);
-         clearInterval(intervals);
-        //  player.move();/
-        console.log(ele)
-        newTimer();
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == 4){
-         clearInterval(interval);
-         clearInterval(intervals);
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == 3){
-         clearInterval(interval);
-         clearInterval(intervals);
-        //  player.move();
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == 2){
-         clearInterval(interval);
-         clearInterval(intervals);
-        //  player.move();
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == 1){
-          clearInterval(interval);
-         clearInterval(intervals);
-        //   player.move();
+            clearInterval(interval)
+            // startCountdown();
+            firstTimer ();
         }
         if(time == -1){
-            clearInterval(interval);
-            clearInterval(intervals);
-          }
-       
-    }
+            clearInterval(interval)
+        }
+
+        }
         update();
     };
 
-    const startTime=11;
-    let time=startTime - 1;
-    const ele=document.querySelector("P");
-    const countdownEle=document.getElementById("id1");
+
+      //create firstTimer to start the time
+      var interval;
+      var time;
    
-    var interval = setInterval(newTimer,1000);
+   //    const startCountdown=() => {
+        const firstTimer =() => {
    
-   function newTimer(){
-      let minutes=Math.floor(time / 60);
+        const startTime=11;
+        time=startTime - 1;
+    // const ele=document.querySelector("P");
+    // const countdownEle=document.getElementById("id2");
+        const countdownEle=document.querySelector("P");
+   
+        interval = setInterval(newTimer,1000);
+         function newTimer(){
+           let minutes=Math.floor(time / 60);
    //    console.log(minutes)
-      let seconds=time % 60;
+           let seconds=time % 60;
    
-      minutes = minutes < 10 ? '0' + minutes : minutes;
+           minutes = minutes < 10 ? '0' + minutes : minutes;
+   
+           seconds = seconds < 10 ? '0' + seconds : seconds;
+   
+           countdownEle.innerHTML=`${minutes}:${seconds}`;
+           console.log(countdownEle.innerText)
+           time --;
+    // clearInterval(intervals)
+    // function one(){
+          if(time == -1){
+             clearInterval(interval);
+   
+             alert("your time is out");
+             var a=confirm("Your time is out,you lose one life and continue the game");
+             if(a){
+               alert("you leave one life")
+            // pauseCountdown ();
+            //    secondTimer();
+            firstTimer ();
+             }
+               else{
+               alert("You start a new game")
+           //    pauseCountdown();
+            //    secondTimer();
+            firstTimer ();
+              }
+           }
+           console.log("iam 1",countdownEle)
+        }
+      };
+   firstTimer ();
 
-      seconds = seconds < 10 ? '0' + seconds : seconds;
-
-      countdownEle.innerHTML=`${minutes}:${seconds}`;
-      console.log(countdownEle)
-      time --;
-    
-    function one(){
-      if(time === -1){
-        clearInterval(interval);
-
-        alert("your time is out");
-        console.log(countdownEle)
-        console.log(ele);
-
-    // var interval = setInterval(newTimer,1000);
-      }
-    }
-    one();
-    }
    
     /**
      * Handle all the updates of the canvas and creates the objects
@@ -358,6 +391,7 @@ window.onload = function() {
      * @function
      * @name board
      */
+   
     function board() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
         ctx.fillRect(w-100, h-70, 100, 70);
@@ -368,8 +402,8 @@ window.onload = function() {
 
         ctx.font = "14px Arial";
         ctx.fillStyle = "rgba(255, 255, 255, 1)";
-        ctx.fillText(score + " poketballs",w-85, h-25);
-        // ctx.fillText(score,w-93, h-25);
+      ctx.fillText(score + " poketballs",w-93, h-25);
+    
 
     }
     /**
