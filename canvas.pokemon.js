@@ -24,6 +24,13 @@ window.onload = function() {
     var speed = 100;
     var modifier = 100;
     var score = 0;
+    var lives = 3;
+    //heartImage
+    var heartImage = new Image();
+    heartImage.onload=function(){
+        assetsLoaded();
+    }
+    heartImage.src="images/heart.png";
 
     //terrain image
     var terrainImage = new Image();
@@ -235,54 +242,45 @@ window.onload = function() {
            //remove clearInterval and add firstTimer
         if(time == 9){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 8){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 7){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 6){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 5){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 4){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 3){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 2){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == 1){
             clearInterval(interval)
-            // startCountdown();
             firstTimer ();
         }
         if(time == -1){
             clearInterval(interval)
         }
-
-        }
+       
+     }
         update();
     };
 
@@ -320,16 +318,15 @@ window.onload = function() {
    
              alert("your time is out");
              var a=confirm("Your time is out,you lose one life and continue the game");
+           
              if(a){
                alert("you leave one life")
-            // pauseCountdown ();
-            //    secondTimer();
+
             firstTimer ();
              }
                else{
                alert("You start a new game")
-           //    pauseCountdown();
-            //    secondTimer();
+
             firstTimer ();
               }
            }
@@ -415,9 +412,24 @@ window.onload = function() {
         if(terrainImageLoaded == true && houseImageLoaded == true && pokeballImageLoaded == true && playerImageLoaded == true) {
             pokeball.generatePosition();
             update();
+            drawHearts()
         }
     }
 
+    function drawHearts(){
+        for(var i=0;i<=lives;i++){
+            ctx.drawImage(heartImage,canvas.width-60*i,5,60,45);
+        }
+        // timer();
+    }
+    
+    // function removeHearts(){
+    //     for(var i=2;i<=lives;i--){
+    //         ctx.drawImage(heartImage,canvas.width-60*i,5,60,45);
+    //     }
+    //     // timer();
+    // }
+    
     /**
      * Assign of the arrow keys to call the player move
      */
